@@ -5,12 +5,12 @@ public class AVLTreeAutoTest extends AVLTreeTest {
 	}
 
 	public static void main(String[] args) throws NodeAlreadyExistsException {
-		AVLTreeAutoTest test = new AVLTreeAutoTest();
 		AVLTree tree = new AVLTree();
 
-		int[] values = {10, 7, 13, 2, 5, 16, 3, 11, 6, 8, 12};
+		int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+		int[] values2 = {9, 8, 7, 6, 5, 4, 3, 2, 1};
 
-		// test insert()
+		//ADICIONAR primeiros valores
 		try {
 			print(TESTING_INSERT, true);
 			for (int i: values) {
@@ -21,7 +21,7 @@ public class AVLTreeAutoTest extends AVLTreeTest {
 			print(e.toString(), true);
 		}
 
-		// test find()
+		// test contains()
 		try {
 			print(TESTING_FIND, true);
 			for (int i: values) {
@@ -36,20 +36,28 @@ public class AVLTreeAutoTest extends AVLTreeTest {
 			print(e.toString(), true);
 		}
 
-//		tree.printTree();
-		tree.preOrder(tree.getRoot());
-		System.out.println();
-		tree.postOrder(tree.getRoot());
-		System.out.println();
-		tree.inOrder(tree.getRoot());
-		System.out.println();
-		tree.printTree();
-		System.out.println("Altura da árvore: "+tree.height());
-		System.out.println("Número de elementos da árvore: "+tree.size());
-		System.out.println("A árvore está vazia? "+tree.isEmpty());
-		tree.clear();
-		System.out.println("A árvore está vazia? "+tree.isEmpty());
+//		TESTES
+		//EXIBIR A ARVORE
 		tree.printTree();
 
+		//ALTURA DA ARVORE
+		System.out.println("Altura da árvore: "+tree.height());
+
+		//LIMPAR A ARVORE
+		tree.clear();
+
+		//ADICIONAR OS OUTROS VALORES
+		try {
+			print(TESTING_INSERT, true);
+			for (int i: values2) {
+				print(INSERTING + i + ELLIPSIS, false);
+				tree.add(i);
+			}
+		} catch (Exception e) {
+			print(e.toString(), true);
+		}
+
+		//CAMINHAMENTO CENTRAL
+		tree.inOrder(tree.getRoot());
 	}
 }

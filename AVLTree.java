@@ -38,38 +38,110 @@ public class AVLTree {
 	 * @throws NodeAlreadyExistsException - if the tree contains a node 
 	 * that already has an int value equal to data
 	 */
+
 	public void add(int data) throws NodeAlreadyExistsException {
 		try {
-			Node current = root;
-			Node parent = current;
-			if (root == null) {
-				root = new Node(data);
-				System.out.println(AVLTreeTest.SUCCESS);
-			} else {
-				while (current != null && data != current.getData()) {
-					if (data < current.getData()) {
-						parent = current;
-						current = current.getLeftChild();
-					} else {
-						parent = current;
-						current = current.getRightChild();
-					}
-				}
-				if (current != null && data == current.getData()) {
-					System.out.println(AVLTreeTest.FAILED);
-					throw new NodeAlreadyExistsException(NodeAlreadyExistsException.MESSAGE + data);
-				} else if (data < parent.getData() && parent.getLeftChild() == current) {
-					parent.setLeftChild(new Node(data));
-					System.out.println(AVLTreeTest.SUCCESS);
-				} else {
-					parent.setRightChild(new Node(data));
-					System.out.println(AVLTreeTest.SUCCESS);
-				}
-			}
+			root = add(root, data);
+			System.out.println(AVLTreeTest.SUCCESS);
 		} catch (NodeAlreadyExistsException e) {
 			System.out.println(e.toString());
 		}
 	}
+
+	private Node add(Node node, int data) throws NodeAlreadyExistsException {
+		if (node == null) {
+			return new Node(data);
+		}
+
+		if (data < node.getData()) {
+			node.setLeftChild(add(node.getLeftChild(), data));
+		} else if (data > node.getData()) {
+			node.setRightChild(add(node.getRightChild(), data));
+		} else {
+			// Node with the same value already exists
+			System.out.println(AVLTreeTest.FAILED);
+			throw new NodeAlreadyExistsException(NodeAlreadyExistsException.MESSAGE + data);
+		}
+
+		// Atualiza a altura do nodo atual
+		node.setHeight(1 + Math.max(height(node.getLeftChild()), height(node.getRightChild())));
+
+		int balance = node.getBalanceFactor();
+
+		//rotação esquerda-esquerda
+		if (balance > 1 && data < node.getLeftChild().getData()) {
+			return rightRotate(node);
+		}
+
+		//rotação direita-direita
+		if (balance < -1 && data > node.getRightChild().getData()) {
+			return leftRotate(node);
+		}
+
+		//rotação esquerda-direita
+		if (balance > 1 && data > node.getLeftChild().getData()) {
+			node.setLeftChild(leftRotate(node.getLeftChild()));
+			return rightRotate(node);
+		}
+
+		//rotação direita-esquerda
+		if (balance < -1 && data < node.getRightChild().getData()) {
+			node.setRightChild(rightRotate(node.getRightChild()));
+			return leftRotate(node);
+		}
+
+		return node;
+	}
+
+
+	private int height(Node node) {
+		if (node == null) {
+			return 0;
+		}
+		return node.getHeight();
+	}
+
+	public int height(){
+		return height(root)-1;
+	}
+
+	private int getBalance(Node node) {
+		if (node == null) {
+			return 0;
+		}
+		return height(node.getLeftChild()) - height(node.getRightChild());
+	}
+
+	private Node rightRotate(Node y) {
+		Node x = y.getLeftChild();
+		Node T2 = x.getRightChild();
+
+		// Realiza a rotação
+		x.setRightChild(y);
+		y.setLeftChild(T2);
+
+		// Atualiza as alturas
+		y.setHeight(1 + Math.max(height(y.getLeftChild()), height(y.getRightChild())));
+		x.setHeight(1 + Math.max(height(x.getLeftChild()), height(x.getRightChild())));
+
+		return x;
+	}
+
+	private Node leftRotate(Node x) {
+		Node y = x.getRightChild();
+		Node T2 = y.getLeftChild();
+
+		// Realiza a rotação
+		y.setLeftChild(x);
+		x.setRightChild(T2);
+
+		// Atualiza as alturas
+		x.setHeight(1 + Math.max(height(x.getLeftChild()), height(x.getRightChild())));
+		y.setHeight(1 + Math.max(height(y.getLeftChild()), height(y.getRightChild())));
+
+		return y;
+	}
+
 
 	/**
 	 * Finds a Node in the AVL tree that contains the integer, data
@@ -153,22 +225,6 @@ public class AVLTree {
 	}
 
 
-	//height()
-	public int height() {
-		return height(root);
-	}
-
-	private int height(Node node) {
-		if (node == null) {
-			return -1;
-		} else {
-			int leftHeight = height(node.getLeftChild());
-			int rightHeight = height(node.getRightChild());
-			return 1 + Math.max(leftHeight, rightHeight);
-		}
-	}
-
-
 	//size()
 	public int size() {
 		return size(root);
@@ -183,7 +239,6 @@ public class AVLTree {
 			return 1 + leftSize + rightSize;
 		}
 	}
-
 
 	//isEmpty()
 	public boolean isEmpty() {
