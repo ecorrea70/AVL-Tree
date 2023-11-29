@@ -48,6 +48,7 @@ public class AVLTree {
 		}
 	}
 
+	//add -> complexidade O(log n)
 	private Node add(Node node, int data) throws NodeAlreadyExistsException {
 		if (node == null) {
 			return new Node(data);
@@ -93,7 +94,7 @@ public class AVLTree {
 		return node;
 	}
 
-
+	//complexidade O(1)
 	private int height(Node node) {
 		if (node == null) {
 			return 0;
@@ -150,6 +151,7 @@ public class AVLTree {
 	 * @return false if a Node is not found in the AVL tree that
 	 * contains the int value, data
 	 */
+	//complexidade -> O(log n)
 	public boolean contains(int data) {
 		Node current = root;
 		while (current != null && data != current.getData()) {
@@ -219,7 +221,7 @@ public class AVLTree {
 		}
 	}
 
-	//clear()
+	//clear() -> complexidade: 0(1)
 	public void clear() {
 		root = null;
 	}
