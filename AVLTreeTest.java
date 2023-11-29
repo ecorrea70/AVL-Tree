@@ -3,11 +3,11 @@ import java.util.Scanner;
 public class AVLTreeTest {
 
 	// declare constants
-	public static final String TESTING_INSERT = "Testing insert()";
-	public static final String INSERTING = "Inserting ";
+	public static final String TESTING_INSERT = "Testing add()";
+	public static final String INSERTING = "Adicionando ";
 
-	public static final String TESTING_FIND = "Testing find()";
-	public static final String FINDING = "Finding ";
+	public static final String TESTING_FIND = "Testing contains()";
+	public static final String FINDING = "Procurando ";
 
 	public static final String SUCCESS = "SUCCESS!";
 	public static final String FAILED = "FAILED!";

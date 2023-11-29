@@ -15,7 +15,7 @@ public class AVLTreeAutoTest extends AVLTreeTest {
 			print(TESTING_INSERT, true);
 			for (int i: values) {
 				print(INSERTING + i + ELLIPSIS, false);
-				tree.insert(i);
+				tree.add(i);
 			}
 		} catch (Exception e) {
 			print(e.toString(), true);
@@ -26,7 +26,7 @@ public class AVLTreeAutoTest extends AVLTreeTest {
 			print(TESTING_FIND, true);
 			for (int i: values) {
 				print(FINDING + i + ELLIPSIS, false);
-				if (tree.find(i)) {
+				if (tree.contains(i)) {
 					print(SUCCESS, true);
 				} else {
 					print(FAILED, true);
@@ -38,6 +38,18 @@ public class AVLTreeAutoTest extends AVLTreeTest {
 
 //		tree.printTree();
 		tree.preOrder(tree.getRoot());
+		System.out.println();
 		tree.postOrder(tree.getRoot());
+		System.out.println();
+		tree.inOrder(tree.getRoot());
+		System.out.println();
+		tree.printTree();
+		System.out.println("Altura da árvore: "+tree.height());
+		System.out.println("Número de elementos da árvore: "+tree.size());
+		System.out.println("A árvore está vazia? "+tree.isEmpty());
+		tree.clear();
+		System.out.println("A árvore está vazia? "+tree.isEmpty());
+		tree.printTree();
+
 	}
 }

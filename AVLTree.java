@@ -38,7 +38,7 @@ public class AVLTree {
 	 * @throws NodeAlreadyExistsException - if the tree contains a node 
 	 * that already has an int value equal to data
 	 */
-	public void insert(int data) throws NodeAlreadyExistsException {
+	public void add(int data) throws NodeAlreadyExistsException {
 		try {
 			Node current = root;
 			Node parent = current;
@@ -78,7 +78,7 @@ public class AVLTree {
 	 * @return false if a Node is not found in the AVL tree that
 	 * contains the int value, data
 	 */
-	public boolean find(int data) {
+	public boolean contains(int data) {
 		Node current = root;
 		while (current != null && data != current.getData()) {
 			if (data < current.getData()) {
@@ -100,7 +100,7 @@ public class AVLTree {
 	 */
 	public void preOrder(Node current) {
 		if (current == null) {
-			System.out.print("null ");
+			//System.out.print("null ");
 		} else {
 			System.out.print(current.getData() + " ");
 			preOrder(current.getLeftChild());
@@ -115,7 +115,7 @@ public class AVLTree {
 	 */
 	public void inOrder(Node current) {
 		if (current == null) {
-			System.out.print("null ");
+			//System.out.print("null ");
 		} else {
 			inOrder(current.getLeftChild());
 			System.out.print(current.getData() + " ");
@@ -130,7 +130,7 @@ public class AVLTree {
 	 */
 	public void postOrder(Node current) {
 		if (current == null) {
-			System.out.print("null ");
+			//System.out.print("null ");
 		} else {
 			postOrder(current.getLeftChild());
 			postOrder(current.getRightChild());
@@ -146,4 +146,49 @@ public class AVLTree {
 			System.out.println("Árvore vazia!");
 		}
 	}
+
+	//clear()
+	public void clear() {
+		root = null;
+	}
+
+
+	//height()
+	public int height() {
+		return height(root);
+	}
+
+	private int height(Node node) {
+		if (node == null) {
+			return -1;
+		} else {
+			int leftHeight = height(node.getLeftChild());
+			int rightHeight = height(node.getRightChild());
+			return 1 + Math.max(leftHeight, rightHeight);
+		}
+	}
+
+
+	//size()
+	public int size() {
+		return size(root);
+	}
+
+	private int size(Node node) {
+		if (node == null) {
+			return 0;
+		} else {
+			int leftSize = size(node.getLeftChild());
+			int rightSize = size(node.getRightChild());
+			return 1 + leftSize + rightSize;
+		}
+	}
+
+
+	//isEmpty()
+	public boolean isEmpty() {
+		return root == null;
+	}
+
+
 }
